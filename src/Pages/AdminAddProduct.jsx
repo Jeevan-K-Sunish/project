@@ -3,7 +3,7 @@ import { ShopContext } from '../Context/ShopContext';
 // import './Addproduct.css';
 
 function AddProduct() {
-  const { data,products, setProducts } = useContext(ShopContext);
+  const { data, setData } = useContext(ShopContext);
   console.log("data",data);
 
   const [newProduct, setNewProduct] = useState({
@@ -39,12 +39,12 @@ function AddProduct() {
       name: newProduct.name,
       category: newProduct.category,
       image: newProduct.image,
-      newprice: newProduct.new_price,
-      oldprice: newProduct.old_price
+      new_price: newProduct.new_price,
+      old_price: newProduct.old_price
     };
 
     // Add the new product to the products list
-    setProducts([...products, newProductData]);
+    setData([...data, newProductData]);
 
     // Clear the form fields
     setNewProduct({

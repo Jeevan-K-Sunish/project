@@ -26,7 +26,7 @@ const ShopContextProvider = (props) => {
     const [user, setUser] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [data, setData] = useState(all_product)
-    const [products,setProducts] = useState(data)
+    const [products,setProducts] = useState([])
 
     const addToCart = (itemId) => {
         if (isLoggedIn) {
