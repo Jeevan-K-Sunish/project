@@ -1,0 +1,6 @@
+.add-product-container{
+    height: 50px;
+    width: 120px;
+    display: flex;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}

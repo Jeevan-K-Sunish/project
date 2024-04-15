@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { ShopContext } from '../Context/ShopContext';
-// import './Addproduct.css';
+import './CSS/AdminAddProduct.css'
 
 function AddProduct() {
   const { data, setData } = useContext(ShopContext);
@@ -79,12 +79,12 @@ function AddProduct() {
 
         <label>
           New Price:
-          <input type="number" name="newprice" value={newProduct.new_price} onChange={handleChange} required />
+          <input type="number" id="new_price" name="new_price" value={newProduct.new_price} onChange={handleChange} required />
         </label>
 
         <label>
           Old Price:
-          <input type="number" name="oldprice" value={newProduct.old_price} onChange={handleChange} required />
+          <input type="number" id="old_price"name="old_price" value={newProduct.old_price} onChange={handleChange} required />
         </label>
         <button type="submit">Add Product</button>
       </form>

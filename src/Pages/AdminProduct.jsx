@@ -34,9 +34,11 @@ console.log("hello")
   return (
     <div className="admin-product">
       <div>
+        <div className="addproduct-button">
         <Button className="addproduct" onClick={handleAddProduct} >Add Product
           
         </Button>
+        </div>
       </div>
       {data.map((product) => (
         <div className="products-container" key={product.id}>
