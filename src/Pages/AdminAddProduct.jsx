@@ -59,9 +59,10 @@ function AddProduct() {
   };
 
   return (
+    <div className="input-container">
     <div className="add-product-container">
       <h3>Add New Product</h3>
-      <form onSubmit={handleSubmit}>
+      <form className='input-form' onSubmit={handleSubmit}>
         <label>
           Name:
           <input type="text" name="name" value={newProduct.name} onChange={handleChange} required />
@@ -86,8 +87,10 @@ function AddProduct() {
           Old Price:
           <input type="number" id="old_price"name="old_price" value={newProduct.old_price} onChange={handleChange} required />
         </label>
-        <button type="submit">Add Product</button>
+        
+        <button className='input-button' type="submit">Add Product</button>
       </form>
+    </div>
     </div>
   );
 }

@@ -47,8 +47,8 @@ console.log("hello")
           <h3>{product.name}</h3>
           <Image src={product.image} alt={product.name} />
           <p>Category: {product.category}</p>
-          <p>Price: {product.newprice}</p>
-          <p>Quantity: {product.oldprice}</p>
+          <p>Price: {product.new_price}</p>
+          <p>Quantity: {product.old_price}</p>
           <Button onClick={() => handleEdit(product.id)}>Edit</Button>{" "}
           <Button onClick={() => handleDelete(product)}>Delete</Button>
           </div>

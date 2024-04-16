@@ -1,6 +1,28 @@
 .add-product-container{
-    height: 50px;
-    width: 120px;
-    display: flex;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    height: 120px;
+    width: 100%;
+    padding-left: 20px;
+    border: 1px solid #c9c9c9;
+    outline: none;
+    color: #5c5c5c;
+    font-size: 18px;
 }
+.input-container{
+    display: flex;
+    flex-direction: column;
+    gap: 29px;
+    margin-top: 30px;
+}
+.add-product-container button{
+    height: 40px;
+    width: 120px;
+    color: white;
+    background-color: red;
+}
+/* .input-form{
+    width: 500px;
+    height: 600px;
+    background: white;
+    margin: auto;
+    padding: 40px 60px;
+} */
