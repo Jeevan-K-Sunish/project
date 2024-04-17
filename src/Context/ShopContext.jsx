@@ -1,5 +1,6 @@
 import React, { createContext, useState } from "react";
 import all_product from "../Components/Assets/all_product";
+import CartItems from "../Components/CartItem/CartItems";
 
 
 export const ShopContext = createContext(null);
@@ -26,13 +27,31 @@ const ShopContextProvider = (props) => {
     const [user, setUser] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [data, setData] = useState(all_product)
-    const [products,setProducts] = useState([])
+    const [products, setProducts] = useState([])
+
+    // const addToCart = (itemId) => {
+    //     if (isLoggedIn) {
+    //         if (cartItems[itemId] > 0) {
+    //             alert('Product has already been added');
+    //         } else {
+    //             setCartItems([CartItems, itemId]);
+    //         }
+    //     } else {
+    //         alert('Please Login to Add Products to the Cart');
+    //     }
+    // }
 
     const addToCart = (itemId) => {
         if (isLoggedIn) {
-            setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+            if (cartItems[itemId] > 0) {
+                alert('Product has already been added');
+            } else {
+                const updatedCart = { ...cartItems };
+                updatedCart[itemId] += 1;
+                setCartItems(updatedCart);
+            }
         } else {
-            alert('Please  Login to Add Products to the Cart');
+            alert('Please Login to Add Products to the Cart');
         }
     }
 
@@ -40,8 +59,10 @@ const ShopContextProvider = (props) => {
         setIsLoggedIn(true);
     };
 
-    const removeFromcart = (itemId) => {
-        setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+    const removeFromCart = (itemId) => {
+        const updatedCart = { ...cartItems };
+        delete updatedCart[itemId];
+        setCartItems(updatedCart);
     }
 
     const getTotalCartAmount = () => {
@@ -55,19 +76,17 @@ const ShopContextProvider = (props) => {
         return totalAmount;
     }
 
-    const getTotalCartItems = () =>{
+    const getTotalCartItems = () => {
         let totalItem = 0;
-        for (const item in cartItems)
-        {
-            if(cartItems[item]>0)
-            {
-                totalItem+= cartItems[item];
+        for (const item in cartItems) {
+            if (cartItems[item] > 0) {
+                totalItem += cartItems[item];
             }
         }
         return totalItem;
     }
 
-    const contextValue = { getTotalCartItems,getTotalCartAmount, all_product, cartItems, addToCart, removeFromcart, name, setName, email, setEmail, password, setPassword, login, setLogin, user, setUser, isLoggedIn, loginHandler, data, setData, products, setProducts };
+    const contextValue = { getTotalCartItems, getTotalCartAmount, all_product, cartItems, addToCart, removeFromCart, name, setName, email, setEmail, password, setPassword, login, setLogin, user, setUser, isLoggedIn, loginHandler, data, setData, products, setProducts };
 
     return (
         <ShopContext.Provider value={contextValue}>

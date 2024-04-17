@@ -4,7 +4,7 @@ import remove_icon from '../Assets/cart_cross_icon.png'
 import { ShopContext } from '../../Context/ShopContext'
 
 export const CartItems = () => {
-    const {getTotalCartAmount,data,cartItems,removeFromcart} = useContext(ShopContext)
+    const {getTotalCartAmount,data,cartItems,removeFromCart} = useContext(ShopContext)
     const [ newItem ,setCartItems ] = useState(cartItems);
 
 
@@ -16,18 +16,20 @@ export const CartItems = () => {
     //     cartItems.filter(item=>item.id!==id)
     // }
 
-    const incrementQuantity = (Id) => {
-     const newCartItem = { ...newItem };
-        newCartItem[Id] += 1;
-        setCartItems(newCartItem);
+    const incrementQuantity = (itemId) => {
+        const updatedCart = { ...newItem }; // Create a copy of the cartItems state
+        updatedCart[itemId] += 1; // Increment the quantity of the specified item
+        setCartItems(updatedCart); // Update the state with the modified copy
     };
-
-    const decrementQuantity = (Id) => {
-        if (newCartItem[Id] >= 1) {
-            newCartItem[Id] -= 1;
+    
+    const decrementQuantity = (itemId) => {
+        if (newItem[itemId] >= 1) {
+            const updatedCart = { ...newItem }; // Create a copy of the cartItems state
+            updatedCart[itemId] -= 1; // Decrement the quantity of the specified item
+            setCartItems(updatedCart); // Update the state with the modified copy
         }
-        setCartItems(newCartItem);
-    };  
+    }; 
+     
 
   return (
     <div className='cartitems'>
@@ -50,11 +52,11 @@ export const CartItems = () => {
                     <img src={e.image} alt="" className='carticon-product-icon'/>
                     <p>{e.name}</p>
                     <p>${e.new_price}</p>
-                    <button className="cartitems-quantity-decrement" onClick={() => decrementQuantity(e.Id)}>-</button>
+                    <button className="cartitems-quantity-decrement" onClick={() => decrementQuantity(e.id)}>-</button>
                     <button className='cartitems-quantity'>{cartItems[e.id]}</button>
-                    <button className="cartitems-quantity-increment" onClick={() => incrementQuantity(e.Id)}>+</button>
+                    <button className="cartitems-quantity-increment" onClick={() => incrementQuantity(e.id)}>+</button>
                     <p>${e.new_price*cartItems[e.id]}</p>
-                    <img className='cartitems-remove-icon' src={remove_icon} onClick={()=>{removeFromcart(e.id)}} alt="" />
+                    <img className='cartitems-remove-icon' src={remove_icon} onClick={()=>{removeFromCart(e.id)}} alt="" />
                 </div>
                 <hr />
             </div>
