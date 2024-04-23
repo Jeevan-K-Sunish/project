@@ -35,9 +35,8 @@ console.log("hello")
     <div className="admin-product">
       <div>
         <div className="addproduct-button">
-        <Button className="addproduct" onClick={handleAddProduct} >Add Product
-          
-        </Button>
+        <Button onClick={handleAddProduct}>Add Product</Button>
+
         </div>
       </div>
       {data.map((product) => (

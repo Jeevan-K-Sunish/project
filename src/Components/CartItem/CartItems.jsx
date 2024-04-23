@@ -17,7 +17,9 @@ export const CartItems = () => {
     // }
 
     const incrementQuantity = (itemId) => {
-        const updatedCart = { ...newItem }; // Create a copy of the cartItems state
+        console.log("increment");
+        console.log(itemId,"item id");
+        const updatedCart = { ...cartItems }; // Create a copy of the cartItems state
         updatedCart[itemId] += 1; // Increment the quantity of the specified item
         setCartItems(updatedCart); // Update the state with the modified copy
     };
