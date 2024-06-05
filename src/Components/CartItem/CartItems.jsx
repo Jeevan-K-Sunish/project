@@ -1,97 +1,90 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from "react"
+import { ShopContext } from "../../Context/ShopContext"
+import all_product from "../Assets/all_product";
+import remove_icon from "../Assets/cart_cross_icon.png"
 import './CartItems.css'
-import remove_icon from '../Assets/cart_cross_icon.png'
-import { ShopContext } from '../../Context/ShopContext'
 
-export const CartItems = () => {
-    const {getTotalCartAmount,data,cartItems,removeFromCart} = useContext(ShopContext)
-    const [ newItem ,setCartItems ] = useState(cartItems);
+export default function CartItems() {
+  const { data, cartItems, setCartItems } = useContext(ShopContext);
 
+  const removeFromCart = (itemId) => {
+    setCartItems(cartItems.filter(item => item.id !== itemId));
+  };
 
-    useEffect(() => {
-        setCartItems(cartItems);
-    }, [data, setCartItems, cartItems])
+  const incrementQuantity = (itemId) => {
+    const updatedCart = cartItems.map(item => {
+      if (item.id === itemId) {
+        return { ...item, quantity: item.quantity + 1 };
+      }
+      return item;
+    });
+    setCartItems(updatedCart);
+  };
 
-    // const removeFromcart=(id)=>{
-    //     cartItems.filter(item=>item.id!==id)
-    // }
+  const decrementQuantity = (itemId) => {
+    const updatedCart = cartItems.map(item => {
+      if (item.id === itemId && item.quantity > 1) {
+        return { ...item, quantity: item.quantity - 1 };
+      }
+      return item;
+    });
+    setCartItems(updatedCart);
+  };
 
-    const incrementQuantity = (itemId) => {
-        console.log("increment");
-        console.log(itemId,"item id");
-        const updatedCart = { ...cartItems }; // Create a copy of the cartItems state
-        updatedCart[itemId] += 1; // Increment the quantity of the specified item
-        setCartItems(updatedCart); // Update the state with the modified copy
-    };
-    
-    const decrementQuantity = (itemId) => {
-        if (newItem[itemId] >= 1) {
-            const updatedCart = { ...newItem }; // Create a copy of the cartItems state
-            updatedCart[itemId] -= 1; // Decrement the quantity of the specified item
-            setCartItems(updatedCart); // Update the state with the modified copy
-        }
-    }; 
-     
+  const getTotalCartAmount = () => {
+    return cartItems.reduce((total, item) => total + item.quantity * item.new_price, 0);
+  };
 
   return (
-    <div className='cartitems'>
-        <div className="cartitems-format-main">
-            <p>Products</p>
-            <p>Title</p>
-            <p>Price</p>
-            <br />
-            <p>Quantity</p>
-            <br />
-            <p>Total</p>
-            <p>remove</p>
-        </div>
+    <div className="cartitems">
+      <div className="cartitems-format-main">
+        <p>Product</p>
+        <p>Title</p>
+        <p>Price</p>
+        <br />
+        <p>Quantity</p>
+        <br />
+        <p>Total</p>
+        <p>Remove</p>
+      </div>
+      <hr />
+      <div>
+        {cartItems.map((prod) => (
+          <div className="cartitems-format cartitems-format-main" key={prod.id}>
+            <img className="carticon-product-icon" src={prod.image} alt={prod.name} />
+            <p>{prod.name}</p>
+            <p>${prod.new_price}</p>
+              <button className="cartitems-quantity-decrement" onClick={() => decrementQuantity(prod.id)}>-</button>
+              <button className="cartitems-quantity">{prod.quantity}</button>
+              <button className="cartitems-quantity-increment" onClick={() => incrementQuantity(prod.id)}>+</button>
+            <p>${prod.new_price * prod.quantity}</p>
+            <img className="cartitems-remove-icon" src={remove_icon} alt="Remove" onClick={() => removeFromCart(prod.id)} />
+          </div>
+        ))}
         <hr />
-        {data.map((e)=>{
-            if(cartItems[e.id]>0)
-            {
-                return  <div>
-                <div className="cartitems-format cartitems-format-main">
-                    <img src={e.image} alt="" className='carticon-product-icon'/>
-                    <p>{e.name}</p>
-                    <p>${e.new_price}</p>
-                    <button className="cartitems-quantity-decrement" onClick={() => decrementQuantity(e.id)}>-</button>
-                    <button className='cartitems-quantity'>{cartItems[e.id]}</button>
-                    <button className="cartitems-quantity-increment" onClick={() => incrementQuantity(e.id)}>+</button>
-                    <p>${e.new_price*cartItems[e.id]}</p>
-                    <img className='cartitems-remove-icon' src={remove_icon} onClick={()=>{removeFromCart(e.id)}} alt="" />
-                </div>
-                <hr />
+      </div>
+      <div className="cartitems-down">
+        <div className="cartitems-total">
+          <h1>Cart Total</h1>
+          <div>
+            <div className="cartitems-total-item">
+              <p>SubTotal</p>
+              <p>${getTotalCartAmount()}</p>
             </div>
-            }
-            return null;
-        })}
-        <div className="cartitems-down">
-            <div className="cartitems-total">
-              <h1>Cart Totals</h1>
-              <div>
-                <div className="cartitems-total-item">
-                    <p>Subtotal</p>
-                    <p>${getTotalCartAmount()}</p>
-                </div>
-                <hr />
-                <div className="cartitems-total-item">
-                    <p>Shipping Fee</p>
-                    <p>Free</p>
-                </div>
-                <hr />
-                <div className="cartitems-total-item">
-                    <h3>Order Total</h3>
-                    <h3>${getTotalCartAmount()}</h3>
-                </div>
-                </div>  
-                <button>PROCEED TO CHECKOUT</button>
-            </div>       
+            <hr />
+            <div className="cartitems-total-item">
+              <p>Shipping Fee</p>
+              <p>Free</p>
+            </div>
+            <hr />
+            <div className="cartitems-total-item">
+              <h3>Order Total</h3>
+              <h3>${getTotalCartAmount()}</h3>
+            </div>
+          </div>
+          <button>Proceed to Check-out</button>
         </div>
+      </div>
     </div>
-  )
+  );
 }
-
-
-export default CartItems
-
-
